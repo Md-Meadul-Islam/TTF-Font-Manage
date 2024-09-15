@@ -18,7 +18,7 @@
                 <div class="mx-auto d-flex align-items-center">
                     <a href="/" class="navbar-brand">TTF Font Upload</a>
                 </div>
-                <div class="message ms-auto">
+                <div class="message ms-3 d-flex align-items-center">
                 </div>
             </div>
         </nav>
@@ -61,7 +61,7 @@
                             <input type="text" name="groupname" id="groupname" class="form-control"
                                 placeholder="Group Title">
                         </div>
-                        <div class="py-2">
+                        <div class="fontChooseRow py-2">
                             <div class="card p-1 my-2">
                                 <div class="row g-0 d-flex align-items-center">
                                     <div class="col-6 p-1">
@@ -74,7 +74,8 @@
                                         </select>
                                     </div>
                                     <div class="col-1 p-1 d-flex align-items-center justify-content-center">
-                                        <a class="text-danger cursor-pointer">✖</a>
+                                        <a
+                                            class="crossBtn text-danger cursor-pointer border border-1 rounded-circle p-1">✖</a>
                                     </div>
                                 </div>
                             </div>
@@ -90,14 +91,15 @@
                                         </select>
                                     </div>
                                     <div class="col-1 p-1 d-flex align-items-center justify-content-center">
-                                        <a class="text-danger cursor-pointer">✖</a>
+                                        <a
+                                            class="crossBtn text-danger cursor-pointer border border-1 rounded-circle p-1">✖</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
-                            <a class="btn btn-sm btn-outline-success px-4"> ➕ Add Row</a>
-                            <a class="btn btn-success btn-sm px-4">Create</a>
+                            <a class="addRow btn btn-sm btn-outline-success px-4"> ➕ Add Row</a>
+                            <a class="createGroup btn btn-success btn-sm px-4">Create</a>
                         </div>
                     </div>
                 </div>

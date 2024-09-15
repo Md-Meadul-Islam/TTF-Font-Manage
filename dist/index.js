@@ -69,26 +69,26 @@ function loadFont() {
         })
 }
 function checkDuplicate(selectedFont, currentIndex) {
-    const fontnameInput = document.querySelectorAll('.fontname');
     let isDuplicate = false;
-    fontnameInput.forEach(function (fontname, index) {
-        if (index !== currentIndex && fontname.value === selectedFont) {
+    $('.fontname').each(function (index, fontname) {
+        if (index !== currentIndex && $(fontname).val() === selectedFont) {
             isDuplicate = true;
         }
     });
-    const message = document.querySelector('.message');
     if (isDuplicate) {
-        fontnameInput[currentIndex].value = '';
-        message.innerHTML = `<p class="text-danger">Please choose a different font.</p>`;
+        $('.fontname').eq(currentIndex).val('');
+        $('.message').html('<p class="text-danger">Please choose a different font.</p>');
     } else {
-        message.innerHTML = '';
+        $('.message').html('');
     }
 }
+
 function populateFontOptions() {
-    fontNameSecondaryArr = fontNameArr.slice();
     const fontSelect = document.querySelectorAll('.allfonts');
+
     fontSelect.forEach(function (select, index) {
-        fontNameSecondaryArr.forEach(function (font) {
+        select.innerHTML = '<option value="">Select Font</option>';
+        fontNameArr.forEach(function (font) {
             const option = document.createElement('option');
             option.value = font;
             option.textContent = font;
@@ -99,42 +99,93 @@ function populateFontOptions() {
             const fontnameInput = document.querySelectorAll('.fontname')[index];
             fontnameInput.value = selectedFont;
             checkDuplicate(selectedFont, index);
-        })
+        });
     });
 }
+
 function loadFontGroup() {
 
 }
-window.addEventListener('load', function () {
-    const dragDropArea = document.getElementById('dragDropArea');
-    const fileInput = document.getElementById('choosefont');
+$(window).on('load', function () {
+    const dragDropArea = $('#dragDropArea');
+    const fileInput = $('#choosefont');
 
-    dragDropArea.addEventListener('dragover', (e) => {
+    dragDropArea.on('dragover', function (e) {
         e.preventDefault();
-        dragDropArea.style.borderColor = '#aaa';
+        dragDropArea.css('border-color', '#aaa');
     });
 
-    dragDropArea.addEventListener('dragleave', (e) => {
-        dragDropArea.style.borderColor = '#ccc';
+    dragDropArea.on('dragleave', function () {
+        dragDropArea.css('border-color', '#ccc');
     });
 
-    dragDropArea.addEventListener('drop', (e) => {
+    dragDropArea.on('drop', function (e) {
         e.preventDefault();
-        dragDropArea.style.borderColor = '#ccc';
-        const file = e.dataTransfer.files[0];
+        dragDropArea.css('border-color', '#ccc');
+        const file = e.originalEvent.dataTransfer.files[0];
         handleFile(file);
     });
 
     // Handle click to select file
-    dragDropArea.addEventListener('click', () => {
+    dragDropArea.on('click', function () {
         fileInput.click();
     });
 
-    fileInput.addEventListener('change', (e) => {
+    fileInput.on('change', function (e) {
         const file = e.target.files[0];
         handleFile(file);
     });
+
     loadFont();
     setTimeout(populateFontOptions, 1000);
 
+    $(document).on('click', function (e) {
+        if ($(e.target).closest('.crossBtn').length) {
+            let $this = $(e.target);
+            if ($('.card').length > 2) {
+                $this.closest('.card').remove();
+                $('.message').html('');
+                populateFontOptions();
+            } else {
+                $('.message').html('<p class="text-danger">At least two cards must remain !</p>');
+            }
+        }
+        if ($(e.target).closest('.addRow').length) {
+            let newRow = `<div class="card p-1 my-2">
+                                <div class="row g-0 d-flex align-items-center">
+                                    <div class="col-6 p-1">
+                                        <input type="text" name="fontname" class="fontname form-control"
+                                            placeholder="Font Name" disabled>
+                                    </div>
+                                    <div class="col-5 p-1">
+                                        <select name="allfonts" class="allfonts form-select">
+                                        <option value="">Select Font</option> </select>
+                                    </div>
+                                    <div class="col-1 p-1 d-flex align-items-center justify-content-center">
+                                        <a
+                                            class="crossBtn text-danger cursor-pointer border border-1 rounded-circle p-1">✖</a>
+                                    </div>
+                                </div>
+                            </div>`;
+            $('.fontChooseRow').append(newRow);
+            populateFontOptions();
+        }
+        if ($(e.target).closest('.createGroup').length) {
+            const groupName = $('#groupname').val();
+            const allRow = $('.fontChooseRow').children();
+            let fontName = [];
+            if (allRow.length >= 2) {
+                for (let i = 0; i < allRow.length; i++) {
+                    fontName.push($(allRow[i]).find('.fontname').val());
+                }
+                $('.message').html('');
+            } else {
+                $('.message').html('<p class="text-danger">Select at Least two font !</p>');
+            }
+
+            if (!groupName) {
+                $('.message').html('<p class="text-danger">Group Name Required !</p>');
+            }
+        }
+    })
 })
