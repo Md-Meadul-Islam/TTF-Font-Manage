@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Group 1",
+        "fonts": "fonts 1, fonts 2"
+    },
+    {
+        "name": "Group 2",
+        "fonts": "fonts 2, fonts 3"
+    },
+    {
+        "name": "Group 3",
+        "fonts": "fonts 1, fonts 3"
+    },
+    {
+        "name": "Group 4",
+        "fonts": "fonts 5, fonts 2"
+    },
+    {
+        "name": "Group 5",
+        "fonts": "fonts 1, fonts 6"
+    }
+]

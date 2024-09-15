@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['font'])) {
-    $uploadDir = 'files/';
+    $uploadDir = 'fonts/';
     $allowedTypes = ['ttf'];
     $font = $_FILES['font'];
     $fontName = basename($font['name']);

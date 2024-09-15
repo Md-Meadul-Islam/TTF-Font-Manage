@@ -1,3 +1,4 @@
+let fontNameArr = [];
 function handleFile(font) {
     const fontExtension = font.name.split('.').pop().toLowerCase();
     if (font && fontExtension == 'ttf') {
@@ -18,6 +19,7 @@ function uploadFont(font) {
     }).then(response => response.json())
         .then((data) => {
             if (data.success) {
+                fontNameArr.push(data.fontName);
                 const tableBody = document.querySelector('.all-fonts');
                 const styleTag = document.querySelector('style');
                 styleTag.innerHTML += `
@@ -47,11 +49,12 @@ function loadFont() {
                 const fonts = data.fonts;
                 const tableBody = document.querySelector('.all-fonts');
                 fonts.forEach((font, i) => {
+                    fontNameArr.push(font.split('.')[0]);
                     const styleTag = document.querySelector('style');
                     styleTag.innerHTML += `
                         @font-face {
                             font-family: '${font.split('.')[0]}';
-                            src: url('./files/${font}') format('truetype');
+                            src: url('./fonts/${font}') format('truetype');
                         }
                     `;
                     const row = document.createElement('tr');
@@ -65,33 +68,40 @@ function loadFont() {
             }
         })
 }
+function loadFontGroup() {
 
-const dragDropArea = document.getElementById('dragDropArea');
-const fileInput = document.getElementById('choosefont');
+}
+window.addEventListener('load', function () {
+    const dragDropArea = document.getElementById('dragDropArea');
+    const fileInput = document.getElementById('choosefont');
 
-dragDropArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dragDropArea.style.borderColor = '#aaa';
-});
+    dragDropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dragDropArea.style.borderColor = '#aaa';
+    });
 
-dragDropArea.addEventListener('dragleave', (e) => {
-    dragDropArea.style.borderColor = '#ccc';
-});
+    dragDropArea.addEventListener('dragleave', (e) => {
+        dragDropArea.style.borderColor = '#ccc';
+    });
 
-dragDropArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dragDropArea.style.borderColor = '#ccc';
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
-});
+    dragDropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dragDropArea.style.borderColor = '#ccc';
+        const file = e.dataTransfer.files[0];
+        handleFile(file);
+    });
 
-// Handle click to select file
-dragDropArea.addEventListener('click', () => {
-    fileInput.click();
-});
+    // Handle click to select file
+    dragDropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
 
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    handleFile(file);
-});
-loadFont();
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        handleFile(file);
+    });
+    loadFont();
+
+    const allFontsForSelect = document.querySelectorAll('.allfonts');
+
+})

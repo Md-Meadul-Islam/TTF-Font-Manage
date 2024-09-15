@@ -1,5 +1,5 @@
 <?php
-$directory = __DIR__ . "/files";
+$directory = __DIR__ . "/fonts";
 $fileArr = [];
 if (is_dir($directory)) {
     if ($dh = opendir($directory)) {
