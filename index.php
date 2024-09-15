@@ -18,6 +18,8 @@
                 <div class="mx-auto d-flex align-items-center">
                     <a href="/" class="navbar-brand">TTF Font Upload</a>
                 </div>
+                <div class="message ms-auto">
+                </div>
             </div>
         </nav>
         <section class="file-upload pt-5">
@@ -64,11 +66,27 @@
                                 <div class="row g-0 d-flex align-items-center">
                                     <div class="col-6 p-1">
                                         <input type="text" name="fontname" class="fontname form-control"
-                                            value="28 Days Later" disabled>
+                                            placeholder="Font Name" disabled>
                                     </div>
                                     <div class="col-5 p-1">
                                         <select name="allfonts" class="allfonts form-select">
-                                            <option value="">28 Days Later</option>
+                                            <option value="">Select Font</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-1 p-1 d-flex align-items-center justify-content-center">
+                                        <a class="text-danger cursor-pointer">✖</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card p-1 my-2">
+                                <div class="row g-0 d-flex align-items-center">
+                                    <div class="col-6 p-1">
+                                        <input type="text" name="fontname" class="fontname form-control"
+                                            placeholder="Font Name" disabled>
+                                    </div>
+                                    <div class="col-5 p-1">
+                                        <select name="allfonts" class="allfonts form-select">
+                                            <option value="">Select Font</option>
                                         </select>
                                     </div>
                                     <div class="col-1 p-1 d-flex align-items-center justify-content-center">

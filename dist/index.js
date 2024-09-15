@@ -19,7 +19,7 @@ function uploadFont(font) {
     }).then(response => response.json())
         .then((data) => {
             if (data.success) {
-                fontNameArr.push(data.fontName);
+                fontNameArr.append(data.fontName);
                 const tableBody = document.querySelector('.all-fonts');
                 const styleTag = document.querySelector('style');
                 styleTag.innerHTML += `
@@ -68,6 +68,40 @@ function loadFont() {
             }
         })
 }
+function checkDuplicate(selectedFont, currentIndex) {
+    const fontnameInput = document.querySelectorAll('.fontname');
+    let isDuplicate = false;
+    fontnameInput.forEach(function (fontname, index) {
+        if (index !== currentIndex && fontname.value === selectedFont) {
+            isDuplicate = true;
+        }
+    });
+    const message = document.querySelector('.message');
+    if (isDuplicate) {
+        fontnameInput[currentIndex].value = '';
+        message.innerHTML = `<p class="text-danger">Please choose a different font.</p>`;
+    } else {
+        message.innerHTML = '';
+    }
+}
+function populateFontOptions() {
+    fontNameSecondaryArr = fontNameArr.slice();
+    const fontSelect = document.querySelectorAll('.allfonts');
+    fontSelect.forEach(function (select, index) {
+        fontNameSecondaryArr.forEach(function (font) {
+            const option = document.createElement('option');
+            option.value = font;
+            option.textContent = font;
+            select.appendChild(option);
+        });
+        select.addEventListener('change', (e) => {
+            const selectedFont = e.target.value;
+            const fontnameInput = document.querySelectorAll('.fontname')[index];
+            fontnameInput.value = selectedFont;
+            checkDuplicate(selectedFont, index);
+        })
+    });
+}
 function loadFontGroup() {
 
 }
@@ -101,7 +135,6 @@ window.addEventListener('load', function () {
         handleFile(file);
     });
     loadFont();
-
-    const allFontsForSelect = document.querySelectorAll('.allfonts');
+    setTimeout(populateFontOptions, 1000);
 
 })
