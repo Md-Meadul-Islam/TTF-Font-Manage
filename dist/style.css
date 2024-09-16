@@ -34,3 +34,7 @@
 .cursor-pointer {
     cursor: pointer !important;
 }
+
+p {
+    margin-bottom: 0 !important;
+}

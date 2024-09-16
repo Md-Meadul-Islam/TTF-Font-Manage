@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $data = [
-        'uid' => generateUId(),
+        'gid' => generateUId(),
         'group_name' => $groupName,
         'fonts' => $fontsArray
     ];

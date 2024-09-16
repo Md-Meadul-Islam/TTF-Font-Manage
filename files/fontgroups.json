@@ -1,6 +1,6 @@
 [
     {
-        "uid": "bc203cb3-44c6-5f95",
+        "gid": "bd01b2cb-c084-90d0",
         "group_name": "ffadaf",
         "fonts": [
             "Atop-R99O3",
@@ -8,32 +8,7 @@
         ]
     },
     {
-        "uid": "bd01b2cb-c084-90d0",
-        "group_name": "ffadaf",
-        "fonts": [
-            "Atop-R99O3",
-            "28 Days Later"
-        ]
-    },
-    {
-        "uid": "c1b2544a-7b4a-ce6d",
-        "group_name": "ffadaf",
-        "fonts": [
-            "Atop-R99O3",
-            "28 Days Later"
-        ]
-    },
-    {
-        "uid": "c9c9b3d1-a730-4adf",
-        "group_name": "hi",
-        "fonts": [
-            "LoveDays-2v7Oe",
-            "Atop-R99O3",
-            "28 Days Later"
-        ]
-    },
-    {
-        "uid": "c9c9cead-58ed-3fc3",
+        "gid": "c9c9cead-58ed-3fc3",
         "group_name": "hi",
         "fonts": [
             "LoveDays-2v7Oe",

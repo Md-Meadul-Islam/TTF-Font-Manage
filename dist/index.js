@@ -110,7 +110,7 @@ function loadFontGroup() {
         success: function (res) {
             const r = JSON.parse(res);
             r.data.forEach(function (group) {
-                let row = `<tr class="singlegroup" data-id="${group.uid}">
+                let row = `<tr class="singlegroup" data-id="${group.gid}">
                                     <td>${group.group_name}</td>`;
                 let fonts = '';
                 group.fonts.forEach((font, index) => {
@@ -207,7 +207,6 @@ $(window).on('load', function () {
                     fontName.push(fontValue);
                 }
             }
-            console.log(groupName, fontName);
             if (fontName.length >= 2) {
                 formData.append('groupname', groupName);
                 fontName.forEach((font, index) => {
@@ -239,18 +238,20 @@ $(window).on('load', function () {
         if ($(e.target).closest('.deletegroup').length) {
             const row = $(e.target).closest('.singlegroup');
             const groupId = row.data('id');
-            $.ajax({
-                url: 'deletegroup.php',
-                method: 'POST',
-                data: { gid: groupId },
-                success: function (res) {
-                    const r = JSON.parse(res);
-                    if (r.success) {
-                        row.remove();
-                        $('.message').html(`<p class="text-success">${r.message}</p>`);
+            if (confirm('Are You sure to delete this Group ?')) {
+                $.ajax({
+                    url: 'deletegroup.php',
+                    method: 'POST',
+                    data: { gid: groupId },
+                    success: function (res) {
+                        const r = JSON.parse(res);
+                        if (r.success) {
+                            row.remove();
+                            $('.message').html(`<p class="text-success">${r.message}</p>`);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     })
 })
