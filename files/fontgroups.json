@@ -1,19 +1,21 @@
 [
     {
         "gid": "bd01b2cb-c084-90d0",
-        "group_name": "ffadaf",
+        "group_name": "second",
         "fonts": [
             "Atop-R99O3",
-            "28 Days Later"
+            "28 Days Later",
+            "LoveDays-2v7Oe"
         ]
     },
     {
         "gid": "c9c9cead-58ed-3fc3",
-        "group_name": "hi",
+        "group_name": "first updated font",
         "fonts": [
             "LoveDays-2v7Oe",
             "Atop-R99O3",
-            "28 Days Later"
+            "28 Days Later",
+            "RebellionSquad-ZpprZ"
         ]
     }
 ]

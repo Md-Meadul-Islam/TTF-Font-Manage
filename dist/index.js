@@ -104,6 +104,7 @@ function populateFontOptions() {
 }
 
 function loadFontGroup() {
+    $('.allgroups').html('');
     $.ajax({
         url: 'loadgroup.php',
         method: 'GET',
@@ -305,8 +306,8 @@ $(window).on('load', function () {
                     const r = JSON.parse(res);
                     if (r.success) {
                         loadFontGroup();
-                        $('#staticmodal').hide();
-                        $('.message').html('<p class="text-success">Font group Updated !</p>');
+                        $('#staticmodal').modal('hide');
+                        $('.message').html(`<p class="text-success">${r.message}</p>`);
                     }
                 }
             })
