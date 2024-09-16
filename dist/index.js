@@ -122,7 +122,7 @@ function loadFontGroup() {
                 });
                 let count = group.fonts.length;
                 row += `<td>${fonts}</td><td>${count}</td>`;
-                row += `<td> <a class="editgroup text-success text-underline-hover cursor-pointer pe-2">Edit</a><a class="deletegroup text-danger text-underline-hover cursor-pointer">Delete</a></td></tr>`;
+                row += `<td> <a class="editgroup text-success text-underline-hover cursor-pointer pe-2"  data-bs-toggle="modal" data-bs-target="#staticmodal">Edit</a><a class="deletegroup text-danger text-underline-hover cursor-pointer">Delete</a></td></tr>`;
                 $('.allgroups').append(row);
             })
         }
@@ -233,7 +233,83 @@ $(window).on('load', function () {
             })
         }
         if ($(e.target).closest('.editgroup').length) {
-
+            const row = $(e.target).closest('.singlegroup');
+            const groupId = row.data('id');
+            $.ajax({
+                url: 'editgroup.php',
+                method: 'POST',
+                data: { gid: groupId },
+                success: function (res) {
+                    const r = JSON.parse(res);
+                    if (r.success) {
+                        let data = r.data[0];
+                        $('.modal-body #groupname').val(data.group_name);
+                        $('.modal-body #groupId').val(groupId);
+                        let fontChooseRow = $('.modal-body .fontChooseRow');
+                        data.fonts.forEach(font => {
+                            const card = `<div class="card p-1 my-2">
+                            <div class="row g-0 d-flex align-items-center">
+                                <div class="col-6 p-1">
+                                    <input type="text" name="fontname" class="fontname form-control"
+                                        placeholder="Font Name" value="${font}" disabled>
+                                </div>
+                                <div class="col-5 p-1">
+                                    <select name="allfonts" class="allfonts form-select">
+                                        <option value="">Select Font</option>
+                                    </select>
+                                </div>
+                                <div class="col-1 p-1 d-flex align-items-center justify-content-center">
+                                    <a
+                                        class="crossBtn text-danger cursor-pointer border border-1 rounded-circle p-1">✖</a>
+                                </div>
+                            </div>
+                        </div>`;
+                            fontChooseRow.append(card);
+                        })
+                        populateFontOptions();
+                    }
+                }
+            })
+        }
+        if ($(e.target).closest('.updateGroup').length) {
+            let formData = new FormData();
+            let $this = $(e.target).closest('.modal-body');
+            let groupId = $this.find('#groupId').val();
+            let groupName = $this.find('#groupname').val();
+            const allRow = $this.find('.fontChooseRow').children();
+            let fontName = [];
+            for (let i = 0; i < allRow.length; i++) {
+                const fontValue = $(allRow[i]).find('.fontname').val();
+                if (fontValue) {
+                    fontName.push(fontValue);
+                }
+            }
+            if (fontName.length >= 2) {
+                formData.append('gid', groupId);
+                formData.append('groupname', groupName);
+                fontName.forEach((font) => {
+                    formData.append(`fontname[]`, font);
+                });
+                $('.message').html('');
+            } else {
+                $('.message').html('<p class="text-danger">Select at Least two font !</p>');
+                return 0;
+            }
+            $.ajax({
+                url: 'updategroup.php',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    const r = JSON.parse(res);
+                    if (r.success) {
+                        loadFontGroup();
+                        $('#staticmodal').hide();
+                        $('.message').html('<p class="text-success">Font group Updated !</p>');
+                    }
+                }
+            })
         }
         if ($(e.target).closest('.deletegroup').length) {
             const row = $(e.target).closest('.singlegroup');

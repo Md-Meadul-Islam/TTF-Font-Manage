@@ -126,7 +126,34 @@
                 </div>
             </div>
         </section>
+        <div class="modal modal-lg fade" id="staticmodal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content overflow-hidden">
+                    <div class="modal-header d-flex justify-content-between">
+                        <div style="min-height:30px">Update Group</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div>
+                                <input type="text" name="groupname" id="groupname" class="form-control"
+                                    placeholder="Group Title">
+                                <input type="text" id="groupId" value="" hidden>
+                            </div>
+                            <div class="fontChooseRow py-2">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a class="addRow btn btn-sm btn-outline-success px-4"> ➕ Add Row</a>
+                                <a class="updateGroup btn btn-success btn-sm px-4">Update</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="./dist/jquery.min.js"></script>
+        <script src="./dist/bootstrap5.3.3.min.js"></script>
         <script src="./dist/index.js"></script>
     </body>
 
