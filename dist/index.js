@@ -19,7 +19,7 @@ function uploadFont(font) {
     }).then(response => response.json())
         .then((data) => {
             if (data.success) {
-                fontNameArr.append(data.fontName);
+                fontNameArr.push(data.fontName);
                 const tableBody = document.querySelector('.all-fonts');
                 const styleTag = document.querySelector('style');
                 styleTag.innerHTML += `
@@ -35,8 +35,8 @@ function uploadFont(font) {
                         <td><a href="#" class="text-underline-hover text-danger delete-font">Delete</a></td>
                     `;
                 tableBody.prepend(row);
+                $('.message').html(`<p class="text-danger">${data.message}</p>`);
             }
-            console.log(data.message);
         })
         .catch(err => console.error('Error:', err));
 }
@@ -130,34 +130,34 @@ function loadFontGroup() {
     })
 }
 $(window).on('load', function () {
-    const dragDropArea = $('#dragDropArea');
-    const fileInput = $('#choosefont');
-
-    dragDropArea.on('dragover', function (e) {
+    const dragDropArea = document.getElementById('dragDropArea');
+    const fileInput = document.getElementById('choosefont');
+    dragDropArea.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dragDropArea.css('border-color', '#aaa');
+        dragDropArea.style.borderColor = '#aaa';
     });
 
-    dragDropArea.on('dragleave', function () {
-        dragDropArea.css('border-color', '#ccc');
+    dragDropArea.addEventListener('dragleave', (e) => {
+        dragDropArea.style.borderColor = '#ccc';
     });
 
-    dragDropArea.on('drop', function (e) {
+    dragDropArea.addEventListener('drop', (e) => {
         e.preventDefault();
-        dragDropArea.css('border-color', '#ccc');
-        const file = e.originalEvent.dataTransfer.files[0];
+        dragDropArea.style.borderColor = '#ccc';
+        const file = e.dataTransfer.files[0];
         handleFile(file);
     });
 
     // Handle click to select file
-    dragDropArea.on('click', function () {
+    dragDropArea.addEventListener('click', () => {
         fileInput.click();
     });
 
-    fileInput.on('change', function (e) {
+    fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         handleFile(file);
     });
+
 
     loadFont();
     setTimeout(populateFontOptions, 1000);
