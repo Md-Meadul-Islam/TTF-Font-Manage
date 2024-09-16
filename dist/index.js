@@ -104,7 +104,29 @@ function populateFontOptions() {
 }
 
 function loadFontGroup() {
-
+    $.ajax({
+        url: 'loadgroup.php',
+        method: 'GET',
+        success: function (res) {
+            const r = JSON.parse(res);
+            r.data.forEach(function (group) {
+                let row = `<tr class="singlegroup" data-id="${group.uid}">
+                                    <td>${group.group_name}</td>`;
+                let fonts = '';
+                group.fonts.forEach((font, index) => {
+                    if (index === 0) {
+                        fonts += font;
+                    } else {
+                        fonts += ', ' + font;
+                    }
+                });
+                let count = group.fonts.length;
+                row += `<td>${fonts}</td><td>${count}</td>`;
+                row += `<td> <a class="editgroup text-success text-underline-hover cursor-pointer pe-2">Edit</a><a class="deletegroup text-danger text-underline-hover cursor-pointer">Delete</a></td></tr>`;
+                $('.allgroups').append(row);
+            })
+        }
+    })
 }
 $(window).on('load', function () {
     const dragDropArea = $('#dragDropArea');
@@ -138,7 +160,7 @@ $(window).on('load', function () {
 
     loadFont();
     setTimeout(populateFontOptions, 1000);
-
+    loadFontGroup();
     $(document).on('click', function (e) {
         if ($(e.target).closest('.crossBtn').length) {
             let $this = $(e.target);
@@ -171,21 +193,64 @@ $(window).on('load', function () {
             populateFontOptions();
         }
         if ($(e.target).closest('.createGroup').length) {
+            let formData = new FormData();
             const groupName = $('#groupname').val();
+            if (!groupName) {
+                $('.message').html('<p class="text-danger">Group Name Required !</p>');
+                return 0;
+            }
             const allRow = $('.fontChooseRow').children();
             let fontName = [];
-            if (allRow.length >= 2) {
-                for (let i = 0; i < allRow.length; i++) {
-                    fontName.push($(allRow[i]).find('.fontname').val());
+            for (let i = 0; i < allRow.length; i++) {
+                const fontValue = $(allRow[i]).find('.fontname').val();
+                if (fontValue) {
+                    fontName.push(fontValue);
                 }
+            }
+            console.log(groupName, fontName);
+            if (fontName.length >= 2) {
+                formData.append('groupname', groupName);
+                fontName.forEach((font, index) => {
+                    formData.append(`fontname[]`, font);
+                });
                 $('.message').html('');
             } else {
                 $('.message').html('<p class="text-danger">Select at Least two font !</p>');
+                return 0;
             }
+            $.ajax({
+                url: 'creategroup.php',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    const r = JSON.parse(res);
+                    if (r.success) {
+                        loadFontGroup();
+                        $('.message').html(`<p class="text-success">${r.message}</p>`);
+                    }
+                }
+            })
+        }
+        if ($(e.target).closest('.editgroup').length) {
 
-            if (!groupName) {
-                $('.message').html('<p class="text-danger">Group Name Required !</p>');
-            }
+        }
+        if ($(e.target).closest('.deletegroup').length) {
+            const row = $(e.target).closest('.singlegroup');
+            const groupId = row.data('id');
+            $.ajax({
+                url: 'deletegroup.php',
+                method: 'POST',
+                data: { gid: groupId },
+                success: function (res) {
+                    const r = JSON.parse(res);
+                    if (r.success) {
+                        row.remove();
+                        $('.message').html(`<p class="text-success">${r.message}</p>`);
+                    }
+                }
+            })
         }
     })
 })

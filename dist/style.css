@@ -30,3 +30,7 @@
 .text-underline-hover:hover {
     text-decoration: underline !important;
 }
+
+.cursor-pointer {
+    cursor: pointer !important;
+}

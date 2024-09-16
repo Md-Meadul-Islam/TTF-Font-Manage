@@ -1,22 +1,44 @@
 [
     {
-        "name": "Group 1",
-        "fonts": "fonts 1, fonts 2"
+        "uid": "bc203cb3-44c6-5f95",
+        "group_name": "ffadaf",
+        "fonts": [
+            "Atop-R99O3",
+            "28 Days Later"
+        ]
     },
     {
-        "name": "Group 2",
-        "fonts": "fonts 2, fonts 3"
+        "uid": "bd01b2cb-c084-90d0",
+        "group_name": "ffadaf",
+        "fonts": [
+            "Atop-R99O3",
+            "28 Days Later"
+        ]
     },
     {
-        "name": "Group 3",
-        "fonts": "fonts 1, fonts 3"
+        "uid": "c1b2544a-7b4a-ce6d",
+        "group_name": "ffadaf",
+        "fonts": [
+            "Atop-R99O3",
+            "28 Days Later"
+        ]
     },
     {
-        "name": "Group 4",
-        "fonts": "fonts 5, fonts 2"
+        "uid": "c9c9b3d1-a730-4adf",
+        "group_name": "hi",
+        "fonts": [
+            "LoveDays-2v7Oe",
+            "Atop-R99O3",
+            "28 Days Later"
+        ]
     },
     {
-        "name": "Group 5",
-        "fonts": "fonts 1, fonts 6"
+        "uid": "c9c9cead-58ed-3fc3",
+        "group_name": "hi",
+        "fonts": [
+            "LoveDays-2v7Oe",
+            "Atop-R99O3",
+            "28 Days Later"
+        ]
     }
 ]

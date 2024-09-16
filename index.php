@@ -45,7 +45,6 @@
                             <th class="text-secondary">ACTION</th>
                         </thead>
                         <tbody class="all-fonts">
-
                         </tbody>
                     </table>
                 </div>
@@ -120,7 +119,7 @@
                                 <th class="text-secondary bg-warning-subtle">COUNT</th>
                                 <th class="text-secondary bg-warning-subtle">ACTION</th>
                             </thead>
-                            <tbody>
+                            <tbody class="allgroups">
                             </tbody>
                         </table>
                     </div>
