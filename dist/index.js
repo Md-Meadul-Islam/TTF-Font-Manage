@@ -30,9 +30,9 @@ function uploadFont(font) {
                 `;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                        <td class="text-secondary">${data.fontName}</td>
+                        <td class="fontname text-secondary">${data.fontName}</td>
                         <td class="text-secondary" style="font-family: '${data.fontName}';">Sample Preview</td>
-                        <td><a href="#" class="text-underline-hover text-danger delete-font">Delete</a></td>
+                        <td><a class="deletefont text-underline-hover text-danger cursor-pointer">Delete</a></td>
                     `;
                 tableBody.prepend(row);
                 $('.message').html(`<p class="text-danger">${data.message}</p>`);
@@ -59,9 +59,9 @@ function loadFont() {
                     `;
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td class="text-secondary">${font.split('.')[0]}</td>
+                        <td class="fontname text-secondary">${font.split('.')[0]}</td>
                         <td class="text-secondary" style="font-family: '${font.split('.')[0]}';">Sample Preview</td>
-                        <td><a href="#" class="text-underline-hover text-danger delete-font">Delete</a></td>
+                        <td><a class="deletefont text-underline-hover text-danger cursor-pointer">Delete</a></td>
                     `;
                     tableBody.appendChild(row);
                 });
@@ -136,33 +136,46 @@ $(window).on('load', function () {
         e.preventDefault();
         dragDropArea.style.borderColor = '#aaa';
     });
-
     dragDropArea.addEventListener('dragleave', (e) => {
         dragDropArea.style.borderColor = '#ccc';
     });
-
     dragDropArea.addEventListener('drop', (e) => {
         e.preventDefault();
         dragDropArea.style.borderColor = '#ccc';
         const file = e.dataTransfer.files[0];
         handleFile(file);
     });
-
-    // Handle click to select file
     dragDropArea.addEventListener('click', () => {
         fileInput.click();
     });
-
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         handleFile(file);
     });
 
-
     loadFont();
     setTimeout(populateFontOptions, 1000);
     loadFontGroup();
     $(document).on('click', function (e) {
+        if ($(e.target).closest('.deletefont').length) {
+            let row = $(e.target).closest('tr');
+            let fontName = row.find('.fontname').text();
+            console.dir(fontName);
+            $.ajax({
+                url: 'deletefont.php',
+                method: 'POST',
+                data: { font: fontName },
+                success: function (res) {
+                    const r = JSON.parse(res);
+                    if (r.success) {
+                        loadFont();
+                        $('.message').html(`<p class="text-success">${r.message}</p>`);
+                    } else {
+                        $('.message').html(`<p class="text-danger">${r.message}</p>`);
+                    }
+                }
+            })
+        }
         if ($(e.target).closest('.crossBtn').length) {
             let $this = $(e.target);
             if ($('.card').length > 2) {
