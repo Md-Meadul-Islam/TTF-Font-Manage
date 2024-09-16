@@ -35,7 +35,8 @@ function uploadFont(font) {
                         <td><a class="deletefont text-underline-hover text-danger cursor-pointer">Delete</a></td>
                     `;
                 tableBody.prepend(row);
-                $('.message').html(`<p class="text-danger">${data.message}</p>`);
+                populateFontOptions();
+                $('.message').html(`<p class="text-success">${data.message}</p>`);
             }
         })
         .catch(err => console.error('Error:', err));
@@ -48,6 +49,7 @@ function loadFont() {
             if (data.success) {
                 const fonts = data.fonts;
                 const tableBody = document.querySelector('.all-fonts');
+                tableBody.html = '';
                 fonts.forEach((font, i) => {
                     fontNameArr.push(font.split('.')[0]);
                     const styleTag = document.querySelector('style');
@@ -168,7 +170,7 @@ $(window).on('load', function () {
                 success: function (res) {
                     const r = JSON.parse(res);
                     if (r.success) {
-                        loadFont();
+                        row.remove();
                         $('.message').html(`<p class="text-success">${r.message}</p>`);
                     } else {
                         $('.message').html(`<p class="text-danger">${r.message}</p>`);
